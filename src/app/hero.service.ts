@@ -17,8 +17,6 @@ const httpOptions = {
 @Injectable()
 export class HeroService {
 
-
-
   private heroesUrl = 'http://localhost:3000/heroes';
 
   constructor(
@@ -63,6 +61,14 @@ export class HeroService {
         tap(_ => this.log(`updated hero id=${hero.id}`)),
         catchError(this.handleError<any>('updateHero'))
       );
+  }
+
+  addHero(hero: Hero): Observable<any> {
+    return this.http.post(this.heroesUrl, hero, httpOptions)
+    .pipe(
+      tap(_ => this.log(`added hero name=${hero.name}`)),
+      catchError(this.handleError<any>('addHero'))
+    );
   }
 
 
